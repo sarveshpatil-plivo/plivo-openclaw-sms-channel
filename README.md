@@ -18,7 +18,7 @@ Give an OpenClaw agent a Plivo phone number, then let people text it over SMS. T
 
 - OpenClaw `2026.4.21` or later.
 - A Plivo account with an SMS-capable phone number.
-- Your Plivo Auth ID and Auth Token from <https://cx.plivo.com>.
+- Your Plivo Auth ID and Auth Token from [cx.plivo.com](https://cx.plivo.com/?utm_source=github&utm_medium=oss&utm_campaign=plivo-openclaw-sms-channel).
 - A public URL that reaches your OpenClaw gateway (for inbound webhooks).
 
 ## Install
@@ -56,13 +56,13 @@ Minimal config in `openclaw.json`:
 }
 ```
 
-Point your Plivo application's Message URL at the `publicWebhookUrl` above (method POST). Configure it in the Plivo Console at <https://cx.plivo.com>.
+Point your Plivo application's Message URL at the `publicWebhookUrl` above (method POST). Configure it in the Plivo Console at [cx.plivo.com](https://cx.plivo.com/?utm_source=github&utm_medium=oss&utm_campaign=plivo-openclaw-sms-channel).
 
 ### Configuration reference
 
 | Field | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
-| `authId` | string | Yes | — | Plivo Auth ID from <https://cx.plivo.com>. |
+| `authId` | string | Yes | — | Plivo Auth ID from [cx.plivo.com](https://cx.plivo.com/?utm_source=github&utm_medium=oss&utm_campaign=plivo-openclaw-sms-channel). |
 | `authToken` | string | Yes | — | Plivo Auth Token. Signs and verifies inbound webhooks; keep it secret. |
 | `fromNumber` | string | For outbound | — | E.164 Plivo number or sender ID used for outbound SMS. |
 | `publicWebhookUrl` | string | For inbound | — | Public URL Plivo posts to. Used to reconstruct the signed URL for verification. |
