@@ -1,0 +1,60 @@
+{
+  "name": "plivo-openclaw-sms-channel",
+  "version": "0.1.0",
+  "description": "Plivo SMS channel for OpenClaw. Send and receive SMS through the Plivo Messages API with signed inbound webhooks.",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "openclaw.plugin.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "prepack": "npm run build"
+  },
+  "openclaw": {
+    "extensions": [
+      "./dist/index.js"
+    ],
+    "setupEntry": "./dist/setup-entry.js",
+    "channel": {
+      "id": "plivo-sms",
+      "label": "Plivo SMS",
+      "blurb": "Send and receive SMS via Plivo."
+    },
+    "compat": {
+      "pluginApi": "2026.5",
+      "minGatewayVersion": "2026.5.7"
+    },
+    "build": {
+      "openclawVersion": "2026.5.7"
+    }
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-channel",
+    "plivo",
+    "sms",
+    "webhook"
+  ],
+  "author": "Plivo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarveshpatil-plivo/plivo-openclaw-sms-channel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sarveshpatil-plivo/plivo-openclaw-sms-channel/issues"
+  },
+  "homepage": "https://github.com/sarveshpatil-plivo/plivo-openclaw-sms-channel#readme",
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "openclaw": "^2026.5.7",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

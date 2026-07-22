@@ -1,0 +1,125 @@
+{
+  "id": "plivo-sms",
+  "kind": "channel",
+  "channels": [
+    "plivo-sms"
+  ],
+  "name": "Plivo SMS",
+  "description": "Plivo SMS channel for OpenClaw. Send and receive SMS through the Plivo Messages API with signed inbound webhooks.",
+  "channelEnvVars": {
+    "plivo-sms": [
+      "PLIVO_AUTH_ID",
+      "PLIVO_AUTH_TOKEN",
+      "PLIVO_FROM_NUMBER"
+    ]
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "plivo-sms": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "authId": {
+            "type": "string",
+            "description": "Plivo Auth ID from https://cx.plivo.com."
+          },
+          "authToken": {
+            "type": "string",
+            "description": "Plivo Auth Token from https://cx.plivo.com. Signs and verifies inbound webhooks; keep it secret."
+          },
+          "fromNumber": {
+            "type": "string",
+            "description": "E.164 Plivo phone number or sender ID used for outbound SMS."
+          },
+          "publicWebhookUrl": {
+            "type": "string",
+            "description": "Public URL Plivo posts inbound messages to, for example https://agent.example.com/plivo-sms/webhook. Used to reconstruct the signed URL for signature verification."
+          },
+          "webhookPath": {
+            "type": "string",
+            "default": "/plivo-sms/webhook",
+            "description": "Local webhook route registered in OpenClaw. Only change if you know what you are doing."
+          },
+          "dmSecurity": {
+            "type": "string",
+            "enum": [
+              "allowlist",
+              "open"
+            ],
+            "default": "allowlist",
+            "description": "Inbound and outbound DM security policy. allowlist restricts to allowFrom; open allows any phone number."
+          },
+          "allowFrom": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "description": "E.164 phone numbers allowed to message the bot when dmSecurity is allowlist."
+          }
+        },
+        "required": [
+          "authId",
+          "authToken"
+        ]
+      }
+    }
+  },
+  "channelConfigs": {
+    "plivo-sms": {
+      "label": "Plivo SMS",
+      "description": "Send and receive SMS through the Plivo Messages API.",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "authId": {
+            "type": "string",
+            "description": "Plivo Auth ID from https://cx.plivo.com."
+          },
+          "authToken": {
+            "type": "string",
+            "description": "Plivo Auth Token from https://cx.plivo.com. Signs and verifies inbound webhooks; keep it secret."
+          },
+          "fromNumber": {
+            "type": "string",
+            "description": "E.164 Plivo phone number or sender ID used for outbound SMS."
+          },
+          "publicWebhookUrl": {
+            "type": "string",
+            "description": "Public URL Plivo posts inbound messages to, for example https://agent.example.com/plivo-sms/webhook. Used to reconstruct the signed URL for signature verification."
+          },
+          "webhookPath": {
+            "type": "string",
+            "default": "/plivo-sms/webhook",
+            "description": "Local webhook route registered in OpenClaw. Only change if you know what you are doing."
+          },
+          "dmSecurity": {
+            "type": "string",
+            "enum": [
+              "allowlist",
+              "open"
+            ],
+            "default": "allowlist",
+            "description": "Inbound and outbound DM security policy. allowlist restricts to allowFrom; open allows any phone number."
+          },
+          "allowFrom": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "description": "E.164 phone numbers allowed to message the bot when dmSecurity is allowlist."
+          }
+        },
+        "required": [
+          "authId",
+          "authToken"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  }
+}
