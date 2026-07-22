@@ -96,7 +96,7 @@ Outbound: OpenClaw sends through the `plivo-sms` channel; in allowlist mode the 
 
 ## Get a Plivo account
 
-Sign up at <https://cx.plivo.com/?utm_source=github&utm_medium=oss&utm_campaign=plivo-openclaw-sms-channel>.
+Sign up at [cx.plivo.com](https://cx.plivo.com/?utm_source=github&utm_medium=oss&utm_campaign=plivo-openclaw-sms-channel).
 
 ## Development
 
