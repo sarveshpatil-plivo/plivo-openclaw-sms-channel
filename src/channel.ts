@@ -59,15 +59,16 @@ function buildOutboundParams(cfg: OpenClawConfig, accountId?: string | null) {
 
 /**
  * Shared allowlist predicate for both the inbound sender gate and the outbound
- * guard, so one config governs both directions. In allowlist mode (default) a
- * populated list without "*" must contain the number; an empty list or the
- * "open" policy permits any number.
+ * guard, so one config governs both directions. In allowlist mode (default) an
+ * empty list denies every number (fail closed), a populated list without "*"
+ * must contain the number, and either the "open" policy or a "*" entry permits
+ * any number. Use dmSecurity "open" or allowFrom ["*"] to allow all senders.
  */
 export function isPhoneAllowed(account: ResolvedAccount, phone: string): boolean {
   const policy = account.dmPolicy ?? "allowlist";
   if (policy !== "allowlist") return true;
   const list = account.allowFrom ?? [];
-  if (list.length === 0) return true;
+  if (list.length === 0) return false;
   if (list.some((entry) => normalizeAllowFrom(entry) === "*")) return true;
   const target = normalizePhoneNumber(phone);
   return list.some((entry) => normalizePhoneNumber(entry) === target);

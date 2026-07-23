@@ -2,9 +2,9 @@
 
 # Plivo SMS Channel for OpenClaw
 
-Give an OpenClaw agent a Plivo phone number, then let people text it over SMS. This is a standalone channel plugin. It does not modify OpenClaw core and it does not replace the bundled SMS (Twilio) channel; it adds an independent `plivo-sms` channel.
+Give an OpenClaw agent a Plivo phone number so people can text it over SMS. This is a standalone channel plugin. It does not modify OpenClaw core and does not replace the bundled SMS (Twilio) channel. It adds an independent `plivo-sms` channel.
 
-> **When to use this vs the Plivo tools plugin.** Install this channel if you want people to converse with your agent over SMS, meaning inbound texts and outbound replies. Install the Plivo tools plugin (`plivo-openclaw-tools`) instead, or as well, if you want the agent to take Plivo actions such as sending an SMS, placing a call, looking up a number, or running a Verify OTP flow as steps inside a task.
+> **When to use this vs the Plivo tools plugin.** Install this channel for two-way SMS conversations with your agent, meaning inbound texts and outbound replies. Install the Plivo tools plugin (`plivo-openclaw-tools`) instead, or in addition, for the agent to take Plivo actions such as sending an SMS, placing a call, looking up a number, or running a Verify OTP flow as steps inside a task.
 
 ## Highlights
 
@@ -63,12 +63,12 @@ Point your Plivo application's Message URL at the `publicWebhookUrl` above (meth
 | Field | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
 | `authId` | string | Yes | — | Plivo Auth ID from [cx.plivo.com](https://cx.plivo.com/?utm_source=github&utm_medium=oss&utm_campaign=plivo-openclaw-sms-channel). |
-| `authToken` | string | Yes | — | Plivo Auth Token. Signs and verifies inbound webhooks; keep it secret. |
+| `authToken` | string | Yes | — | Plivo Auth Token. Signs and verifies inbound webhooks. Keep it secret. |
 | `fromNumber` | string | For outbound | — | E.164 Plivo number or sender ID used for outbound SMS. |
 | `publicWebhookUrl` | string | For inbound | — | Public URL Plivo posts to. Used to reconstruct the signed URL for verification. |
 | `webhookPath` | string | No | `/plivo-sms/webhook` | Local OpenClaw route for Plivo webhooks. |
 | `dmSecurity` | string | No | `allowlist` | DM policy: `allowlist` or `open`. |
-| `allowFrom` | string[] | No | `[]` | E.164 numbers allowed to message the agent in allowlist mode. |
+| `allowFrom` | string[] | No | `[]` | E.164 numbers allowed in allowlist mode. An empty list rejects everyone (fail closed). Use `dmSecurity: open` or `allowFrom: ["*"]` to allow all. |
 
 ## Message flow
 
@@ -79,14 +79,14 @@ Outbound: OpenClaw sends through the `plivo-sms` channel; in allowlist mode the 
 ## Security model
 
 - Inbound webhooks are verified with `X-Plivo-Signature-V3` using your Auth Token. Requests without a valid signature (or without `publicWebhookUrl` configured) are rejected.
-- `allowlist` is the default DM security mode; outbound sends honor `allowFrom` in allowlist mode.
+- `allowlist` is the default DM security mode and fails closed: an empty `allowFrom` rejects every sender and blocks every outbound recipient. Set `dmSecurity: open` or `allowFrom: ["*"]` to allow all. Outbound sends honor `allowFrom` in allowlist mode.
 - Egress is restricted to `api.plivo.com` over HTTPS.
 - Keep your Auth Token in OpenClaw config or secrets, never in source control.
 
 ## Limitations (v0.1.0)
 
 - SMS only. MMS/media is not sent or parsed.
-- Single account. Named multi-account maps (multiple numbers from one gateway) are not yet supported; use one `channels.plivo-sms` section.
+- Single account. Named multi-account maps (multiple numbers from one gateway) are not yet supported. Use one `channels.plivo-sms` section.
 
 ## Package identity
 

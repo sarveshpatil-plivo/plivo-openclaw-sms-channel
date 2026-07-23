@@ -58,8 +58,8 @@ describe("assertOutboundAllowed", () => {
     expect(() => assertOutboundAllowed(account({ dmPolicy: "open" }), "+15550009999")).not.toThrow();
   });
 
-  it("permits any destination when allowFrom is empty", () => {
-    expect(() => assertOutboundAllowed(account({ allowFrom: [] }), "+15550009999")).not.toThrow();
+  it("blocks all destinations when allowFrom is empty (fail closed)", () => {
+    expect(() => assertOutboundAllowed(account({ allowFrom: [] }), "+15550009999")).toThrow("outbound blocked");
   });
 
   it("permits wildcard allowFrom", () => {

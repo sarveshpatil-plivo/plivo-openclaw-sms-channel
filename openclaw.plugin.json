@@ -6,13 +6,6 @@
   ],
   "name": "Plivo SMS",
   "description": "Plivo SMS channel for OpenClaw. Send and receive SMS through the Plivo Messages API with signed inbound webhooks.",
-  "channelEnvVars": {
-    "plivo-sms": [
-      "PLIVO_AUTH_ID",
-      "PLIVO_AUTH_TOKEN",
-      "PLIVO_FROM_NUMBER"
-    ]
-  },
   "configSchema": {
     "type": "object",
     "additionalProperties": false,
